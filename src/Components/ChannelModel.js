@@ -52,7 +52,7 @@ export default function ChannelModel({list,team}) {
                           onChange={(e) => setName(e.target.value)}
                         ></input>}
                         <div className='mb-4 mt-2'></div> 
-                        {channel && channel.map((ch) =>  <div className='mb-4'> <Link to={`/channel/${team._id}`} className='button-6'>{ch?.name}</Link></div>                        
+                        {channel && channel.map((ch) =>  <div className='mb-4'> <Link to={`/channel/${team._id}/${ch._id}`} className='button-6'>{ch?.name}</Link></div>                        
                         )}
                  </div>
                 </Modal.Body>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import OpenImage from './OpenImage';
 
 export default function SenderMessageBox({msg}) {
     const date = new Date(msg.createdAt)
@@ -13,27 +12,15 @@ export default function SenderMessageBox({msg}) {
 
     const formattedDate = ` ${hours}:${minutes} | ${day}-${month}-${year}`;
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const [url, setUrl] = useState("")
-    // function handleOpen(val) {
-    //     setUrl(val);
-    //     handleShow();
-    // }
+ console.log(msg);
   return (
       <div className="message-feed media left">
           <div className="pull-left">
           </div>
-          {/* {msg?.attachments.length > 0 && <div className='content-image mf-content receive_img content-image-send'>
-              {msg.attachments  && msg.attachments.map((ele, ind) => {
-                  return <img src={ele.url} alt={ind} onClick={() => handleOpen(ele.url)} style={{ cursor: "pointer" }} />
-              })}
-          </div>} */}
-          <OpenImage handleClose={handleClose} show={show} url={url} msg={msg?.content} />
           <div className="media-body  mt-1">
-              <div className="mf-content msg-container" style={{ fontFamily: "'Gluten', sans-serif" }}>
-                  {msg?.content}
+              <div className="mf-content msg-container" >
+                  <p className='text-warning'>{msg.sender?.name}</p>
+                  {msg.content}
               <small className="mf-date msg_time"><i className="fa fa-clock-o "></i> {formattedDate}</small>
               </div>
           </div>

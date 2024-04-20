@@ -19,6 +19,11 @@ import { FaBell, FaSearch } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import './index.css'
 import ChatUserList from "../../Components/ChatUserList";
+import { LuListTodo } from "react-icons/lu";
+import { MESSAGE_RESET } from "../../types/messageConstants";
+import { getMessage, postMessage } from "../../action/messageAction";
+import UserMessgeBox from "../../Components/UserMessgeBox";
+import SenderMessageBox from "../../Components/SenderMessageBox";
 
 export default function ChatScreen() {
     const match = useParams();
@@ -33,8 +38,7 @@ export default function ChatScreen() {
 
     const messagesEndRef = useRef(null);
     const [typeMessage, setTypeMessage] = useState(null);
-    // const sellerID = match.sellerID;
-    // const chatID = match.chatID;
+
     const [open, setOpen] = useState();
     const [typing, setTyping] = useState(false);
     const [istyping, setIsTyping] = useState(false);
@@ -46,148 +50,52 @@ export default function ChatScreen() {
     var { team } = teams;
  
     
-    const listData=team?.filter((item)=> item._id===teamId)[0]?.channels;
-    
-    console.log(team);
-    console.log(listData);
+    var listData=team?.filter((item)=> item._id===teamId)[0]?.channels;
+
    
-    // const getCHAT = useSelector((state) => state.getChat);
-    // var { chatData, loading } = getCHAT;
-    // const Message = useSelector((state) => state.getMessage);
-    // var { messageData } = Message;
+    const Message = useSelector((state) => state.getMessage);
+    var { messageData } = Message;
 
     const [sendMessage, setSendMessage] = useState("");
   
 
     const [reload, setReload] = useState(false);
     const [searchUser, setSearchUser] = useState("");
+    
+    useEffect(()=>{
+       dispatch({type:MESSAGE_RESET})
+    },[])
+
+    useEffect(()=>{
+         listData = team?.filter((item) => item._id === teamId)[0]?.channels;
+    },[team,teamId,channelId])
+
+    useEffect(()=>{
+         dispatch(getMessage(channelId))
+    },[channelId])
 
    
-    // const [images, setImages] = useState([]);
-    // const [uploading, setUploading] = useState(false);
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (sendMessage === "") {
+            setTypeMessage("Type a message....");
+            setTimeout(() => {
+                setTypeMessage(null);
+            }, 3000);
+        }
+        if (sendMessage !== "") {
+           
+            dispatch(postMessage(channelId,sendMessage,userData._id))
+            setSendMessage("");
+            setReload(!reload);
+        
+        }
+    }
 
-    // console.log(images);
-
-
-
-    // useEffect(() => {
-    //     dispatch({ type: CHAT_RESET });
-    //     dispatch({ type: MESSAGE_RESET });
-    //     dispatch({ type: CHAT_LIST_RESET });
-    // }, []);
-
-    // useEffect(() => {
-    //     if (userData && sellerID && userData._id === sellerID) {
-    //         return;
-    //     }
-    //     if (!chatID && userData && sellerID) {
-    //         dispatch(get_Chat(sellerID, userData.token));
-    //     }
-    // }, [sellerID, userData, chatID, reload]);
-
-    // useEffect(() => {
-    //     if (userData && sellerID && userData?._id === sellerID) {
-    //         return;
-    //     }
-    //     if (userData && chatData && !chatID) {
-    //         dispatch(getMessage(chatData._id, userData.token));
-    //     }
-    //     if (userData && chatID) {
-    //         dispatch(getMessage(chatID, userData.token));
-    //     }
-    //     if (userData) {
-    //         dispatch(get_All_Chat(userData._id, userData.token));
-    //     }
-    // }, [chatData, chatID, userData, reload, sellerID]);
-
-    // useEffect(() => {
-    //     if (localStorage.getItem("userData")) {
-    //         userData = JSON.parse(localStorage.getItem("userData"));
-    //     } else {
-    //         navigate("/");
-    //         return;
-    //     }
-    //     dispatch(get_All_Chat(userData._id, userData.token));
-    //     if (userData._id === sellerID) {
-    //         return;
-    //     }
-
-    //     setSendMessage("");
-    // }, [dispatch, sellerID, userData, chatID, reload]);
-
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     if (sendMessage === "") {
-    //         setTypeMessage("Type a message....");
-    //         setTimeout(() => {
-    //             setTypeMessage(null);
-    //         }, 3000);
-    //     }
-    //     if (sendMessage !== "") {
-    //         const formData = new FormData();
-    //         formData.append("content", sendMessage);
-    //         for (let i = 0; i < images.length; i++) {
-    //             const file = images[i];
-    //             formData.append("attachments", file);
-    //         }
-    //         if (chatID) {
-    //             dispatch(postMessage(chatID, formData, userData.token));
-    //         } else {
-    //             dispatch(postMessage(chatData._id, formData, userData.token));
-    //         }
-    //         if (userData && chatData && !chatID) {
-    //             dispatch(getMessage(chatData._id, userData.token));
-    //         }
-    //         if (userData && chatID) {
-    //             dispatch(getMessage(chatID, userData.token));
-    //         }
-    //         setSendMessage("");
-    //         setReload(!reload);
-    //         setImages([]);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (messagesEndRef.current) {
-    //         messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    //     }
-    // }, [messageData]);
-
-
-    // const uploadFileHandler = async (e) => {
-    //     const data = e.target.files[0];
-    //     if (!data) return;
-    //     const imagesData = [...images];
-    //     imagesData.push(data);
-
-    //     setImages(imagesData);
-    //     setUploading(false);
-    // };
-
-    // const removeImg = (fileToRemove) => {
-    //     const updatedImages = images.filter((file) => file !== fileToRemove);
-    //     setImages(updatedImages);
-    // };
-
-    // function typingHandler(e) {
-    //     setSendMessage(e.target.value);
-    //     if (!typing) {
-    //         setTyping(true);
-
-    //         // socket.emit("typing", selectedChat._id);
-    //     }
-    //     let lastTypingTime = new Date().getTime();
-    //     var timerLength = 3000;
-    //     setTimeout(() => {
-    //         var timeNow = new Date().getTime();
-    //         var timeDiff = timeNow - lastTypingTime;
-    //         if (timeDiff >= timerLength && typing) {
-    //             // socket.emit("stop typing", selectedChat._id);
-    //             setTyping(false);
-    //         }
-    //     }, timerLength);
-    // }
+    function typingHandler(e) {
+        setSendMessage(e.target.value);
+    }
 
     return (
         <>
@@ -199,11 +107,11 @@ export default function ChatScreen() {
                     <div className="" style={{ width: "50px", height: "100px" }}>
                         <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 mt-5">
                             <div>
-                                <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" alt="" className="img-avatar box-img" />
+                                <Link to="/main" className="fs-4 text-light"><FaHome /></Link>
                             </div>
-                            <div>
-                                <Link to="/" className="fs-4 text-light"><FaHome /></Link>
-
+                            <div className="mt-4">
+                                    <Link to="/todo" className="fs-4 text-light"><LuListTodo /></Link>
+                                    
                             </div>
 
                         </div>
@@ -268,14 +176,13 @@ export default function ChatScreen() {
                                                     userID={userData._id}
                                                     key={list._id}
                                                     channelId={channelId ? channelId :null}
+                                                    teamId={teamId}
                                                 />
                                             );
                                         })}
-                                    {/* {searchUser !== "" && chatListData && chatListData
+                                        {searchUser !== "" && listData && listData
                                         .filter((list) =>
-                                            list.participants.some(
-                                                (participant) =>
-                                                    participant.username && participant.username != userData.username && participant.username.includes(searchUser)
+                                            list?.name.includes((searchUser)
                                             )
                                         )
                                         .map((list) => (
@@ -283,11 +190,11 @@ export default function ChatScreen() {
                                                 list={list}
                                                 userID={userData._id}
                                                 key={list._id}
-                                                chatID={chatID ? chatID : chatData ? chatData._id : ""}
-                                                token={userData?.token}
+                                                channelId={channelId ? channelId : null}
+                                                teamId={teamId}
                                             />
-                                        ))} */}
-                                    {/* {!chatListData && <span className="text-center fs-5 text-danger mb-2">No Chat !!</span>} */}
+                                        ))}
+                                    {/* {!listData && <span className="text-center fs-5 text-danger mb-2">No Chat !!</span>} */}
                                 </div>
                             </div>
 
@@ -367,40 +274,16 @@ export default function ChatScreen() {
                                     </ul>
                                 </div>
                                 <div className="show-msg pt-3">
-                                    {/* {messageData &&
+                                    {messageData &&
                                         messageData.map((msg) => {
                                             if (msg.sender._id === userData._id)
                                                 return <UserMessgeBox msg={msg} key={msg._id} />;
                                             else return <SenderMessageBox msg={msg} key={msg._id} />;
-                                        })} */}
+                                        })}
                                     <div ref={messagesEndRef} />
                                 </div>
 
-                                {/* {images && (
-                                    <div className="position-relative input-above">
-                                        {images.map((file, index) => (
-                                            <div
-                                                key={index}
-                                                className="d-inline-block position-relative input-img"
-                                            >
-                                                <img
-                                                    className="mt-2 "
-                                                    src={URL.createObjectURL(file)}
-                                                    style={{ height: "100px" }}
-                                                    alt={`image${index + 1}`}
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-danger btn-sm position-absolute top-0 end-0 img-rem"
-                                                    style={{ width: "30px", height: "40px", display: "none" }}
-                                                    onClick={() => removeImg(file)}
-                                                >
-                                                    X
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )} */}
+                                
                                 <div className="input-above">
                                     {typeMessage && (
                                         <span className="text-white ms-4">Type a Message.....</span>
@@ -410,7 +293,7 @@ export default function ChatScreen() {
                                     )}
                                    
                                 </div>
-                                {/* {((userData && sellerID && userData._id === sellerID) || (!sellerID && !chatID)) ? (
+                                {(!(userData && channelId )) ? (
                                     <></>
                                 ) : (
                                     <div className="card-footer">
@@ -424,27 +307,7 @@ export default function ChatScreen() {
                                                 onChange={(e) => typingHandler(e)}
                                                 value={sendMessage}
                                             ></textarea>
-                                            <div className="input-group-append">
-                                               
-                                                {images.length < 4 && (
-                                                    <>
-                                                        <label
-                                                            for="fileInput"
-                                                            className="input-group-text attach_btn"
-                                                        >
-                                                            <i className="fas fa-paperclip"></i>
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            id="fileInput"
-                                                            style={{ display: "none" }}
-                                                            multiple
-                                                            custom
-                                                            onChange={uploadFileHandler}
-                                                        />
-                                                    </>
-                                                )}
-                                            </div>
+                                            
                                             <div className="input-group-append d-flex">
                                                 <span>
                                                    
@@ -465,7 +328,7 @@ export default function ChatScreen() {
                                             </div>
                                         </div>
                                     </div>
-                                )} */}
+                                )}
                                
                             </div>
                         </div>

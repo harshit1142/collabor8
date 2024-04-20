@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-export default function ChatUserList({ list, userID, channelId }) {
+export default function ChatUserList({ list, teamId, channelId }) {
     const dispatch=useDispatch();
     const navigate=useNavigate();
 
@@ -33,7 +33,7 @@ export default function ChatUserList({ list, userID, channelId }) {
    
     return (
         <div className={active ? "list-menu active  media" : "list-menu "} >
-        <Link to={`/channel/chat/${list?._id}`} className={active ?"list-group-item active  media":"list-group-item  media "}>
+        <Link to={`/channel/${teamId}/${list?._id}`} className={active ?"list-group-item active  media":"list-group-item  media "}>
         <div className='d-flex flex-row'>
             <div className="pull-left ">
                 <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" alt="" className="img-avatar userlist-img" />
