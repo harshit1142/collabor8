@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { TeamReducer, createTeamReducer, joinTeamReducer, toastMessage, userLoginReducer, userRegisterReducer } from "./reducers/userReducer";
+import { TeamReducer, createTeamReducer, joinTeamReducer, reload, toastMessage, userLoginReducer, userRegisterReducer } from "./reducers/userReducer";
 import {
     getMESSAGE,
     postMESSAGE
@@ -13,6 +13,7 @@ const reducer = combineReducers({
     getTeam:TeamReducer,
     getMessage: getMESSAGE,
     postMESSAGE: postMESSAGE,
+    refresh:reload
 })
 const userDataFromStorage = localStorage.getItem('userData')
     ? JSON.parse(localStorage.getItem('userData'))

@@ -24,6 +24,7 @@ import { MESSAGE_RESET } from "../../types/messageConstants";
 import { getMessage, postMessage } from "../../action/messageAction";
 import UserMessgeBox from "../../Components/UserMessgeBox";
 import SenderMessageBox from "../../Components/SenderMessageBox";
+import { getAllTeam } from "../../action/userAction";
 
 export default function ChatScreen() {
     const match = useParams();
@@ -67,6 +68,12 @@ export default function ChatScreen() {
     useEffect(() => {
         dispatch({ type: MESSAGE_RESET })
     }, [])
+
+    useEffect(()=>{
+        if(userData){
+            dispatch(getAllTeam(userData._id))
+        }
+    },[channelId,teamId,userData,reload])
 
     useEffect(() => {
         if (messagesEndRef.current) {

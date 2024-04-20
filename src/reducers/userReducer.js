@@ -7,6 +7,7 @@ import {
     JOIN_TEAM_REQUEST,
     JOIN_TEAM_RESET,
     JOIN_TEAM_SUCCESS,
+    RELOAD,
     TEAM_FAIL,
     TEAM_REQUEST,
     TEAM_RESET,
@@ -156,6 +157,19 @@ export const toastMessage = (state = '', action) => {
             }
         case TOAST_RESET:
             return null
+        default:
+            return state
+    }
+}
+
+// reload
+
+export const reload = (state = false, action) => {
+    switch (action.type) {
+        case RELOAD:
+            return {
+                refresh: !state,
+            }
         default:
             return state
     }

@@ -19,6 +19,7 @@ import {
     TEAM_REQUEST,
     TEAM_SUCCESS,
     TEAM_FAIL,
+    RELOAD,
 
 } from "../types/userConstants";
 
@@ -159,11 +160,13 @@ export const addTeam =
                 type: CREATE_TEAM_SUCCESS,
                 payload: data.data,
             });
-            console.log(data);
             dispatch({
                 type: TOAST_ADD,
                 payload: 'TEAM CREATED SUCCESSFULLY !!!',
             });
+            dispatch({
+                type: RELOAD
+            })
         } catch (error) {
             dispatch({
                 type: CREATE_TEAM_FAIL,
@@ -207,11 +210,13 @@ export const joinTeam =
                 type: JOIN_TEAM_SUCCESS,
                 payload: data.data,
             });
-            console.log(data);
             dispatch({
                 type: TOAST_ADD,
                 payload: 'TEAM JOINED SUCCESSFULLY !!!',
             });
+            dispatch({
+                type: RELOAD
+            })
         } catch (error) {
             dispatch({
                 type: JOIN_TEAM_FAIL,
@@ -287,6 +292,9 @@ export const addUser =
                 type: TOAST_ADD,
                 payload: 'USER ADDED !!!',
             });
+            dispatch({
+                type: RELOAD
+            })
         } catch (error) {
          
             dispatch({
@@ -295,6 +303,7 @@ export const addUser =
                     ? error.response.data.msg
                     : error.msg,
             });
+         
         }
     };
 
@@ -324,6 +333,9 @@ export const addChannel =
                 type: TOAST_ADD,
                 payload: 'Channel ADDED !!!',
             });
+            dispatch({
+                type: RELOAD
+            })
         } catch (error) {
 
             dispatch({
@@ -332,5 +344,6 @@ export const addChannel =
                     ? error.response.data.msg
                     : error.msg,
             });
+            
         }
     };

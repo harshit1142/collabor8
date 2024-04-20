@@ -15,6 +15,8 @@ export default function Main() {
     var { userData } = userLogin;
     const teams = useSelector((state) => state.getTeam);
     var { team ,loading} = teams;
+    const test = useSelector((state) => state.refresh);
+    var { refresh } = test;
 
     useEffect(()=>{
         if(localStorage.getItem('userData')){
@@ -28,7 +30,7 @@ export default function Main() {
      if(userData){
         dispatch(getAllTeam(userData._id))
      }
-    },[userData,dispatch])
+    },[userData,dispatch,refresh])
     
   
 

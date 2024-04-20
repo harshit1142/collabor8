@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdAdminPanelSettings } from 'react-icons/md';
-import { addUser } from '../action/userAction';
+import { addUser, getAllTeam } from '../action/userAction';
 
 export default function UserModel({list,team}) {
     const dispatch=useDispatch();
@@ -17,6 +17,7 @@ export default function UserModel({list,team}) {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
 
+
     function handleAdd() {
         if (email==="") {
             setMessage("Enter valid Email")
@@ -25,8 +26,8 @@ export default function UserModel({list,team}) {
             }, 3000)
         } else {
             dispatch(addUser(team?._id,email))
-            handleClose();
-            // window.location.reload();
+            handleClose(); 
+         
         }
     }
     return (

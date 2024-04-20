@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChannel } from '../action/userAction';
+import { addChannel, getAllTeam } from '../action/userAction';
 
 export default function ChannelModel({list,team}) {
     const dispatch=useDispatch();
+    
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,6 +19,8 @@ export default function ChannelModel({list,team}) {
     const [name,setName]=useState("");
     const [message, setMessage] = useState(null);
 
+
+
     function handleAdd()
     {
         if(name===""){
@@ -27,6 +30,9 @@ export default function ChannelModel({list,team}) {
            },3000)
         }else{
             dispatch(addChannel(team._id,name))
+
+            handleClose()
+            
         }
     }
 

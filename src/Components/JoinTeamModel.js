@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle } from 'react-icons/io';
 import Message from './Message';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTeam, joinTeam } from '../action/userAction';
+import { addTeam, getAllTeam, joinTeam } from '../action/userAction';
 
 export default function JoinTeamModel() {
     const dispatch = useDispatch()
@@ -28,7 +28,7 @@ export default function JoinTeamModel() {
         } else {
             dispatch(joinTeam(userData._id, join))
             handleClose();   
-            // window.location.reload();
+          
         }
     }
     function handleNew() {
