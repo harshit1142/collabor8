@@ -3,11 +3,14 @@ import { Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Message from './Message';
+import { useSelector } from 'react-redux';
 
-export default function ChannelModel({list}) {
+export default function ChannelModel({list,team}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const userLogin = useSelector((state) => state.userLogin);
+    var { userData } = userLogin;
 
     const [channel,setChannel]=useState(list);
 
@@ -55,9 +58,9 @@ export default function ChannelModel({list}) {
                     {/* <Button variant="warning">
                         Join Team
                     </Button> */}
-                    <Button variant="primary" onClick={handleAdd}>
+                  {userData && team && userData._id ===team?.admin?._id &&  <Button variant="primary" onClick={handleAdd}>
                         Create A New Channel
-                    </Button>
+                    </Button>}
                 </Modal.Footer>
             </Modal>
         </>

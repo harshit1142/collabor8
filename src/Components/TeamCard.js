@@ -25,8 +25,8 @@ export default function TeamCard({team}) {
                   <div className='d-flex flex-wrap '>
                       
                          
-                              <ChannelModel list={team?.channels}/>
-                              <UserModel list={team?.users}/>
+                              <ChannelModel list={team?.channels} team={team}/>
+                              <UserModel list={team?.users} team={team}/>
                   </div>
               </Card.Body>
           </Card>

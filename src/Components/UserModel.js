@@ -3,11 +3,12 @@ import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 
-export default function UserModel({list}) {
+export default function UserModel({list,team}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const userLogin = useSelector((state) => state.userLogin);
+    var { userData } = userLogin;
     const [listUser,setUser]=useState(list)
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
@@ -50,9 +51,9 @@ export default function UserModel({list}) {
                     {/* <Button variant="warning">
                         Join Team
                     </Button> */}
-                    <Button variant="primary" onClick={handleAdd}>
+                    {userData && team && userData._id === team?.admin?._id &&    <Button variant="primary" onClick={handleAdd}>
                         Add user
-                    </Button>
+                    </Button> }
                 </Modal.Footer>
             </Modal>
         </>
