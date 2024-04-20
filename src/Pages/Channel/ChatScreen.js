@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import SenderMessageBox from "../../components/SenderMessageBox";
-import UserMessgeBox from "../../components/UserMessgeBox";
-import ChatUserList from "../../components/ChatUserList";
+// import SenderMessageBox from "../../components/SenderMessageBox";
+// import UserMessgeBox from "../../components/UserMessgeBox";
+// import ChatUserList from "../../components/ChatUserList";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Loader from "../../Components/Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { Button, Form } from "react-bootstrap";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
+import './index.css'
 
 export default function ChatScreen() {
     const match = useParams();
@@ -37,7 +38,7 @@ export default function ChatScreen() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
-    var { userData } = userLogin;
+    var { userData,loading } = userLogin;
     // const getCHAT = useSelector((state) => state.getChat);
     // var { chatData, loading } = getCHAT;
     // const Message = useSelector((state) => state.getMessage);
@@ -135,51 +136,50 @@ export default function ChatScreen() {
     //     }
     // }
 
-    useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [messageData]);
+    // useEffect(() => {
+    //     if (messagesEndRef.current) {
+    //         messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    //     }
+    // }, [messageData]);
 
 
-    const uploadFileHandler = async (e) => {
-        const data = e.target.files[0];
-        if (!data) return;
-        const imagesData = [...images];
-        imagesData.push(data);
+    // const uploadFileHandler = async (e) => {
+    //     const data = e.target.files[0];
+    //     if (!data) return;
+    //     const imagesData = [...images];
+    //     imagesData.push(data);
 
-        setImages(imagesData);
-        setUploading(false);
-    };
+    //     setImages(imagesData);
+    //     setUploading(false);
+    // };
 
-    const removeImg = (fileToRemove) => {
-        const updatedImages = images.filter((file) => file !== fileToRemove);
-        setImages(updatedImages);
-    };
+    // const removeImg = (fileToRemove) => {
+    //     const updatedImages = images.filter((file) => file !== fileToRemove);
+    //     setImages(updatedImages);
+    // };
 
-    function typingHandler(e) {
-        setSendMessage(e.target.value);
-        if (!typing) {
-            setTyping(true);
+    // function typingHandler(e) {
+    //     setSendMessage(e.target.value);
+    //     if (!typing) {
+    //         setTyping(true);
 
-            // socket.emit("typing", selectedChat._id);
-        }
-        let lastTypingTime = new Date().getTime();
-        var timerLength = 3000;
-        setTimeout(() => {
-            var timeNow = new Date().getTime();
-            var timeDiff = timeNow - lastTypingTime;
-            if (timeDiff >= timerLength && typing) {
-                // socket.emit("stop typing", selectedChat._id);
-                setTyping(false);
-            }
-        }, timerLength);
-    }
+    //         // socket.emit("typing", selectedChat._id);
+    //     }
+    //     let lastTypingTime = new Date().getTime();
+    //     var timerLength = 3000;
+    //     setTimeout(() => {
+    //         var timeNow = new Date().getTime();
+    //         var timeDiff = timeNow - lastTypingTime;
+    //         if (timeDiff >= timerLength && typing) {
+    //             // socket.emit("stop typing", selectedChat._id);
+    //             setTyping(false);
+    //         }
+    //     }, timerLength);
+    // }
 
     return (
         <>
-            {/* <Header />
-      <div style={{ width: "100vw", height: "80px" }}></div> */}
+      
             {loading ? (
                 <Loader />
             ) : (
@@ -206,7 +206,7 @@ export default function ChatScreen() {
                                         className="fs-3 text-light mb-2"
                                         style={{ fontFamily: "'Gluten', sans-serif" }}
                                     >
-                                        Student Assistant
+                                        Collabor8
                                     </div>
                                     <div className="ms-4">
                                         <FaBell className="text-light fs-3" />
@@ -246,9 +246,9 @@ export default function ChatScreen() {
                                         className="text-light fs-5 mb-2"
                                     // style={{ fontFamily: "'Gluten', sans-serif" ,textDecoration:"underline"}}
                                     >
-                                        <span >Recent Chats</span>
+                                        <span >Channels</span>
                                     </span>
-                                    {searchUser === "" && chatListData &&
+                                    {/* {searchUser === "" && chatListData &&
                                         chatListData.map((list) => {
                                             return (
                                                 <ChatUserList
@@ -261,8 +261,8 @@ export default function ChatScreen() {
                                                     token={userData?.token}
                                                 />
                                             );
-                                        })}
-                                    {searchUser !== "" && chatListData && chatListData
+                                        })} */}
+                                    {/* {searchUser !== "" && chatListData && chatListData
                                         .filter((list) =>
                                             list.participants.some(
                                                 (participant) =>
@@ -277,8 +277,8 @@ export default function ChatScreen() {
                                                 chatID={chatID ? chatID : chatData ? chatData._id : ""}
                                                 token={userData?.token}
                                             />
-                                        ))}
-                                    {!chatListData && <span className="text-center fs-5 text-danger mb-2">No Chat !!</span>}
+                                        ))} */}
+                                    {/* {!chatListData && <span className="text-center fs-5 text-danger mb-2">No Chat !!</span>} */}
                                 </div>
                             </div>
 
@@ -300,29 +300,13 @@ export default function ChatScreen() {
                                         <div className="d-flex ">
                                             <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" style={{ width: "60px", height: "60px", borderRadius: "50%" }} className="img-avatar pull-left ms-4" />
                                             <div className="d-flex flex-column ms-4 pt-1 align-items-center justify-content-center" style={{ lineHeight: "26px" }}>
-                                                <div className="fs-2  text-light mt-2">{userData?.fullname}</div>
-                                                <div className="ms-4 text-dark" style={{ fontSize: "16px" }}>{userData?.username}</div>
+                                                {/* <div className="fs-2  text-light mt-2">{userData?.fullname}</div> */}
+                                                {/* <div className="ms-4 text-dark" style={{ fontSize: "16px" }}>{userData?.username}</div> */}
 
                                             </div>
                                         </div>
 
-                                        {messageData && <div> <Dropdown style={{ width: "42px", height: "48px" }} >
-                                            <style>{`
-      .dropdown-toggle::after {
-        display: none;
-      }
-    `}</style>
-                                            <Dropdown.Toggle id="dropdown-basic" style={{ width: "50px", height: "35px", marginRight: "22px" }} >
-                                                <BsThreeDots className="text-dark fs-2 " />
-                                            </Dropdown.Toggle>
-
-                                            <Dropdown.Menu className="bg-danger">
-                                                <DeleteChat />
-
-                                            </Dropdown.Menu>
-
-                                        </Dropdown>
-                                        </div>}
+                                    
                                     </span>
                                     <ul className="ah-actions actions">
                                         {/* <li>
@@ -374,16 +358,16 @@ export default function ChatScreen() {
                                     </ul>
                                 </div>
                                 <div className="show-msg pt-3">
-                                    {messageData &&
+                                    {/* {messageData &&
                                         messageData.map((msg) => {
                                             if (msg.sender._id === userData._id)
                                                 return <UserMessgeBox msg={msg} key={msg._id} />;
                                             else return <SenderMessageBox msg={msg} key={msg._id} />;
-                                        })}
+                                        })} */}
                                     <div ref={messagesEndRef} />
                                 </div>
 
-                                {images && (
+                                {/* {images && (
                                     <div className="position-relative input-above">
                                         {images.map((file, index) => (
                                             <div
@@ -407,7 +391,7 @@ export default function ChatScreen() {
                                             </div>
                                         ))}
                                     </div>
-                                )}
+                                )} */}
                                 <div className="input-above">
                                     {typeMessage && (
                                         <span className="text-white ms-4">Type a Message.....</span>
@@ -415,20 +399,9 @@ export default function ChatScreen() {
                                     {showEmojiPicker && (
                                         <EmojiPicker onEmojiClick={(e) => handleEmojiClick(e)} width={"100%"} />
                                     )}
-                                    {istyping ? (
-                                        <div>
-                                            <Lottie
-                                                options={defaultOptions}
-                                                // height={50}
-                                                width={70}
-                                                style={{ marginBottom: 15, marginLeft: 0 }}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <></>
-                                    )}
+                                   
                                 </div>
-                                {((userData && sellerID && userData._id === sellerID) || (!sellerID && !chatID)) ? (
+                                {/* {((userData && sellerID && userData._id === sellerID) || (!sellerID && !chatID)) ? (
                                     <></>
                                 ) : (
                                     <div className="card-footer">
@@ -443,7 +416,7 @@ export default function ChatScreen() {
                                                 value={sendMessage}
                                             ></textarea>
                                             <div className="input-group-append">
-                                                {/* <span className="input-group-text attach_btn"><i className="fas fa-paperclip"></i></span> */}
+                                               
                                                 {images.length < 4 && (
                                                     <>
                                                         <label
@@ -465,7 +438,7 @@ export default function ChatScreen() {
                                             </div>
                                             <div className="input-group-append d-flex">
                                                 <span>
-                                                    {/* Emoji button */}
+                                                   
                                                     <button style={{ width: "50px", zIndex: "0" }}
                                                         className="btn emoji"
                                                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -483,13 +456,8 @@ export default function ChatScreen() {
                                             </div>
                                         </div>
                                     </div>
-                                )}
-                                {/* <form onSubmit={handleSubmit} >
-                                            <span className="input-group-text attach_btn"><i className="fas fa-paperclip"></i></span>
-                                <textarea placeholder="Text Message..." onChange={(e)=>setSendMessage(e.target.value)} value={sendMessage}></textarea>
-                                <button type="submit"><i className="fa fa-paper-plane"></i></button>
-                                </form> */}
-                                {/* </div> */}
+                                )} */}
+                               
                             </div>
                         </div>
                     </div>
