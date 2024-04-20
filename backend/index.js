@@ -45,8 +45,9 @@ DB();
 const authRoutes = require('./Routes/authRoutes');
 const teamRoutes = require('./Routes/teamRoutes');
 const channelRoutes = require('./Routes/channelRoutes');
-
+const messageRoutes = require('./Routes/messageRoutes');
 
 app.use("/auth",authRoutes);
 app.use("/team", teamRoutes);
+app.use('/message', messageRoutes);
 app.use("/channel", channelRoutes);
