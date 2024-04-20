@@ -6,8 +6,7 @@ const teamSchema = new mongoose.Schema({
         required: true
     },
     teamCode:{
-        type: String,
-        default: null
+        type: String
     },
     admin: {
         type:mongoose.Schema.Types.ObjectId,
@@ -25,6 +24,6 @@ const teamSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const teamModel = mongoose.model("userModel", teamSchema);
+const teamModel = mongoose.model("teamModel", teamSchema);
 
 module.exports = teamModel;

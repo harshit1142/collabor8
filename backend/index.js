@@ -42,7 +42,8 @@ app.listen(4000,()=>{
 DB();
 
 
-// const authRoutes = require('./Routes/authRoutes');
+const authRoutes = require('./Routes/authRoutes');
+const teamRoutes = require('./Routes/teamRoutes');
 
-
-// app.use("/auth",authRoutes);
+app.use("/auth",authRoutes);
+app.use("/team", teamRoutes);
