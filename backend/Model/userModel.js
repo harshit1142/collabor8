@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    teams: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'teamModel'
+    }]
     // post: [{
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref: 'postModel'

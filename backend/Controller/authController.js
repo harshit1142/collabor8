@@ -6,9 +6,9 @@ dotenv.config({ path: '../.env' });
 const jwtKey = process.env.JWT_KEY;
 
 async function loginUser(req, res) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
    
-    const user = await userModel.findOne({ name: username }).exec();
+    const user = await userModel.findOne({ email: email }).exec();
    
  
         if (user) {
@@ -31,7 +31,7 @@ async function loginUser(req, res) {
             }
         }
         else {
-            res.json({ meassage: "Invalid username" });
+            res.json({ meassage: "Invalid email" });
         }
     }
 
