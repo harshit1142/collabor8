@@ -7,17 +7,22 @@ async function createTeam(req, res){
     try{
         const adminId = req.params.id;
         const body = req.body;
+
         let team = await teamModel.create(body);
         const teamid = team._id;
+
+
         
         const code = generateUniqueId({
             length: 6,
             includeSymbols: ['@', '#']
         });
+
         
         // pushing the generated teamCode and the adminId to the team
         team = await teamModel.findByIdAndUpdate({
             _id: teamid
+
         },
         {
             
