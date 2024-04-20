@@ -66,7 +66,7 @@ export default function Login() {
                                   Submit
                               </div>
 
-                              <Link className="button-4 mb-4 w-50 h-100 p-3 " to="/auth/signup">
+                              <Link className="button-4 mb-4 w-50 h-100 p-3 text-light" to="/auth/signup">
                                   Signup
                               </Link>
 
