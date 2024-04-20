@@ -1,9 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jersey+25&family=Playfair+Display:wght@400;500&family=Poppins:ital,wght@0,200;0,400;0,500;0,700;1,100;1,300&display=swap');
 
+:root{
+  padding: 0;
+  margin: 0;
+}
+
 body,html{
+  padding: 0;
+  margin: 0;
   width: 100vw;
   height: 100%;
   overflow-x: hidden;
+}
+
+.style-btn {
+  display: flex;
+  width: 10px;
+  color:white;
+  overflow: hidden;
+  height: 33px;
+  border-radius: 10px !important;
+  transition: all 0.85s !important;
+  background-color: rgb(1, 1, 1) !important;
+}
+
+.style-btn:hover {
+  width: 250px;
+  background-color: rgb(232, 233, 238) !important;
+  color: green !important;
 }
 
 /* Home */
@@ -30,7 +54,41 @@ body,html{
  height: 240px;
 }
 
+/* Main */
 
+.main-header{
+  background-color: #c85000;
+  width: 100%;
+ 
+}
+
+.Nav_Bar {
+  color: black;
+  font-size: 20px;
+  min-height: 70px;
+    font-family: "Jersey 25", sans-serif;
+      font-weight: 500;
+      font-style: normal;
+
+}
+.container{
+  display: flex;
+  justify-content: space-between;
+}
+.side{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.nav-link {
+  width: 90px !important;
+  font-size: 16px !important;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  justify-content: flex-end !important;
+}
 
 /* CSS Buttons*/
 .button-1 {
@@ -341,4 +399,43 @@ body,html{
 .button-4:disabled {
   cursor: default;
   opacity: .24;
+}
+
+
+
+/* CSS */
+.button-5 {
+  --b: 3px;
+  /* border thickness */
+  --s: .45em;
+  /* size of the corner */
+  --color: #373B44;
+
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--color) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-5:hover,
+.button-5:focus-visible {
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+.button-5:active {
+  background: var(--color);
+  color: #fff;
 }
