@@ -5,8 +5,11 @@ const { createTeam, addToTeam, getUserTeams, joinTeam, getAllUsers} = require('.
 
 // route to create a team
 teamRoutes
-.route('/:id') // id: adminId
+.route('/:id') // id: userId
 .post(createTeam)
+
+teamRoutes
+.route('/:id') // teamid
 .get(getAllUsers); // to get all the users of that team
 
 // route to add users to a team and get all the teams of a user

@@ -10,6 +10,15 @@ import {
     USER_REGISTER_SUCCESS,
     USER_REGISTER_RESET,
     TOAST_ADD,
+    CREATE_TEAM_REQUEST,
+    CREATE_TEAM_SUCCESS,
+    CREATE_TEAM_FAIL,
+    JOIN_TEAM_REQUEST,
+    JOIN_TEAM_SUCCESS,
+    JOIN_TEAM_FAIL,
+    TEAM_REQUEST,
+    TEAM_SUCCESS,
+    TEAM_FAIL,
 
 } from "../types/userConstants";
 
@@ -52,9 +61,9 @@ export const login = (email, password) => async (dispatch) => {
         dispatch({
             type: USER_LOGIN_FAIL,
             payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
+                error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
         });
     }
 };
@@ -115,9 +124,9 @@ export const register =
             dispatch({
                 type: USER_REGISTER_FAIL,
                 payload:
-                    error.response && error.response.data.message
-                        ? error.response.data.message
-                        : error.message,
+                    error.response && error.response.data.msg
+                        ? error.response.data.msg
+                        : error.msg,
             });
         }
     };
@@ -126,10 +135,10 @@ export const register =
 // add Team
 
 export const addTeam =
-    (email, password, contact, name) => async (dispatch) => {
+    (userId,name) => async (dispatch) => {
         try {
             dispatch({
-                type: USER_REGISTER_REQUEST,
+                type: CREATE_TEAM_REQUEST,
             });
 
             const config = {
@@ -141,29 +150,116 @@ export const addTeam =
             };
 
             const { data } = await client.post(
-                "/auth/register",
-                { name, email, password, contact },
+                `/team/${userId}`,
+                { name },
                 config
             );
 
             dispatch({
-                type: USER_REGISTER_SUCCESS,
+                type: CREATE_TEAM_SUCCESS,
                 payload: data.data,
             });
             console.log(data);
-            localStorage.setItem("userData", JSON.stringify(data.data));
             dispatch({
                 type: TOAST_ADD,
-                payload: 'REGISTERED SUCCESSFULLY !!!',
+                payload: 'TEAM CREATED SUCCESSFULLY !!!',
             });
         } catch (error) {
             dispatch({
-                type: USER_REGISTER_FAIL,
+                type: CREATE_TEAM_FAIL,
                 payload:
-                    error.response && error.response.data.message
-                        ? error.response.data.message
-                        : error.message,
+                    error.response && error.response.data.msg
+                        ? error.response.data.msg
+                        : error.msg,
+            });
+            dispatch({
+                type: TOAST_ADD,
+                payload: error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
             });
         }
     };
+
+// join Team
+export const joinTeam =
+    (userId,teamCode) => async (dispatch) => {
+        try {
+            dispatch({
+                type: JOIN_TEAM_REQUEST,
+            });
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                },
+            };
+
+            const { data } = await client.post(
+                `/team/usr/${userId}`,
+                { teamCode },
+                config
+            );
+
+            dispatch({
+                type: JOIN_TEAM_SUCCESS,
+                payload: data.data,
+            });
+            console.log(data);
+            dispatch({
+                type: TOAST_ADD,
+                payload: 'TEAM JOINED SUCCESSFULLY !!!',
+            });
+        } catch (error) {
+            dispatch({
+                type: JOIN_TEAM_FAIL,
+                payload:
+                    error.response && error.response.data.msg
+                        ? error.response.data.msg
+                        : error.msg,
+            });
+            dispatch({
+                type: TOAST_ADD,
+                payload: error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg ,
+            });
+        }
+    };
+
+// get All Teams
+
+export const getAllTeam = (userId) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: TEAM_REQUEST,
+        });
+        const config = {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+        };
+
+        const { data } = await client.get(`/team/usr/${userId}`, config);
+
+        dispatch({
+            type: TEAM_SUCCESS,
+            payload: data.teams,
+        });
+    } catch (error) {
+        const msg =
+            error.response && error.response.data.msg
+                ? error.response.data.msg
+                : error.msg;
+        dispatch({
+            type: TEAM_FAIL,
+            payload: msg,
+        });
+    }
+};
+
+
 
