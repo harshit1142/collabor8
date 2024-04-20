@@ -27,8 +27,8 @@ import SenderMessageBox from "../../Components/SenderMessageBox";
 
 export default function ChatScreen() {
     const match = useParams();
-    const teamId=match.teamId;
-    const channelId=match.channelId;
+    const teamId = match.teamId;
+    const channelId = match.channelId;
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const handleEmojiClick = (emoji) => {
         const emojiChar = emoji.emoji
@@ -45,36 +45,44 @@ export default function ChatScreen() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
-    var { userData,loading } = userLogin;
+    var { userData, loading } = userLogin;
     const teams = useSelector((state) => state.getTeam);
     var { team } = teams;
- 
-    
-    var listData=team?.filter((item)=> item._id===teamId)[0]?.channels;
 
-   
+
+    var listData = team?.filter((item) => item._id === teamId)[0]?.channels;
+
+
     const Message = useSelector((state) => state.getMessage);
     var { messageData } = Message;
+   
+
 
     const [sendMessage, setSendMessage] = useState("");
-  
+
 
     const [reload, setReload] = useState(false);
     const [searchUser, setSearchUser] = useState("");
-    
-    useEffect(()=>{
-       dispatch({type:MESSAGE_RESET})
-    },[])
 
-    useEffect(()=>{
-         listData = team?.filter((item) => item._id === teamId)[0]?.channels;
-    },[team,teamId,channelId])
+    useEffect(() => {
+        dispatch({ type: MESSAGE_RESET })
+    }, [])
 
-    useEffect(()=>{
-         dispatch(getMessage(channelId))
-    },[channelId])
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messageData]);
 
-   
+    useEffect(() => {
+        listData = team?.filter((item) => item._id === teamId)[0]?.channels;
+    }, [team, teamId, channelId, reload])
+
+    useEffect(() => {
+        dispatch(getMessage(channelId))
+    }, [channelId, reload])
+
+
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -85,11 +93,12 @@ export default function ChatScreen() {
             }, 3000);
         }
         if (sendMessage !== "") {
-           
-            dispatch(postMessage(channelId,sendMessage,userData._id))
+
+            dispatch(postMessage(channelId, sendMessage, userData._id))
             setSendMessage("");
             setReload(!reload);
-        
+            window.location.reload();
+
         }
     }
 
@@ -99,7 +108,7 @@ export default function ChatScreen() {
 
     return (
         <>
-      
+
             {loading ? (
                 <Loader />
             ) : (
@@ -110,8 +119,8 @@ export default function ChatScreen() {
                                 <Link to="/main" className="fs-4 text-light"><FaHome /></Link>
                             </div>
                             <div className="mt-4">
-                                    <Link to="/todo" className="fs-4 text-light"><LuListTodo /></Link>
-                                    
+                                <Link to="/todo" className="fs-4 text-light"><LuListTodo /></Link>
+
                             </div>
 
                         </div>
@@ -169,18 +178,18 @@ export default function ChatScreen() {
                                         <span >Channels</span>
                                     </span>
                                     {searchUser === "" && listData &&
-                                            listData.map((list) => {
+                                        listData.map((list) => {
                                             return (
                                                 <ChatUserList
                                                     list={list}
                                                     userID={userData._id}
                                                     key={list._id}
-                                                    channelId={channelId ? channelId :null}
+                                                    channelId={channelId ? channelId : null}
                                                     teamId={teamId}
                                                 />
                                             );
                                         })}
-                                        {searchUser !== "" && listData && listData
+                                    {searchUser !== "" && listData && listData
                                         .filter((list) =>
                                             list?.name.includes((searchUser)
                                             )
@@ -216,13 +225,13 @@ export default function ChatScreen() {
                                         <div className="d-flex ">
                                             <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" style={{ width: "60px", height: "60px", borderRadius: "50%" }} className="img-avatar pull-left ms-4" />
                                             <div className="d-flex flex-column ms-4 pt-1 align-items-center justify-content-center" style={{ lineHeight: "26px" }}>
-                                                {/* <div className="fs-2  text-light mt-2">{userData?.fullname}</div> */}
-                                                {/* <div className="ms-4 text-dark" style={{ fontSize: "16px" }}>{userData?.username}</div> */}
+                                                <div className="fs-2  text-light mt-2">{userData?.name}</div>
+                                                <div className="ms-4 text-dark" style={{ fontSize: "16px" }}>{userData?.email}</div>
 
                                             </div>
                                         </div>
 
-                                    
+
                                     </span>
                                     <ul className="ah-actions actions">
                                         {/* <li>
@@ -283,7 +292,7 @@ export default function ChatScreen() {
                                     <div ref={messagesEndRef} />
                                 </div>
 
-                                
+
                                 <div className="input-above">
                                     {typeMessage && (
                                         <span className="text-white ms-4">Type a Message.....</span>
@@ -291,9 +300,9 @@ export default function ChatScreen() {
                                     {showEmojiPicker && (
                                         <EmojiPicker onEmojiClick={(e) => handleEmojiClick(e)} width={"100%"} />
                                     )}
-                                   
+
                                 </div>
-                                {(!(userData && channelId )) ? (
+                                {(!(userData && channelId)) ? (
                                     <></>
                                 ) : (
                                     <div className="card-footer">
@@ -307,10 +316,10 @@ export default function ChatScreen() {
                                                 onChange={(e) => typingHandler(e)}
                                                 value={sendMessage}
                                             ></textarea>
-                                            
+
                                             <div className="input-group-append d-flex">
                                                 <span>
-                                                   
+
                                                     <button style={{ width: "50px", zIndex: "0" }}
                                                         className="btn emoji"
                                                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -329,7 +338,7 @@ export default function ChatScreen() {
                                         </div>
                                     </div>
                                 )}
-                               
+
                             </div>
                         </div>
                     </div>

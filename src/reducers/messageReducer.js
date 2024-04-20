@@ -43,7 +43,7 @@ export const postMESSAGE = (state = {}, action) => {
         case MESSAGE_SEND_SUCCESS:
             return {
                 loading: false,
-                sendMessage: action.payload,
+                postMessage: action.payload,
             }
         case MESSAGE_SEND_FAIL:
             return {
