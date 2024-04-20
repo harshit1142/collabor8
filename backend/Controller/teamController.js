@@ -61,7 +61,7 @@ async function addToTeam(req, res){
 
         const user = await userModel.findOne({ email: userEmail });
         if(!user){
-            req.status(500).json({
+            res.status(500).json({
                 msg: "User not found"
             })
             return;
