@@ -6,7 +6,7 @@ async function createTeam(req, res){
         const adminId = req.params.id;
         const body = req.body;
         const team = await teamModel.create(body);
-        const teamid = team._id;
+        const teamId = team._id;
         
         const code = generateUniqueId({
             length: 6,
@@ -14,7 +14,7 @@ async function createTeam(req, res){
         });
         
         await teamModel.findByIdAndUpdate({
-            _id: teamid
+            _id: teamId
         },
         {
             $push:{
