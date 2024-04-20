@@ -28,6 +28,7 @@ export default function JoinTeamModel() {
         } else {
             dispatch(joinTeam(userData._id, join))
             handleClose();
+            window.location.reload();
         }
     }
     function handleNew() {

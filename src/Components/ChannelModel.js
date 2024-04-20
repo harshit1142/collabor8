@@ -3,9 +3,11 @@ import { Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Message from './Message';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChannel } from '../action/userAction';
 
 export default function ChannelModel({list,team}) {
+    const dispatch=useDispatch();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,7 +27,7 @@ export default function ChannelModel({list,team}) {
             setMessage(null)
            },3000)
         }else{
-            
+            dispatch(addChannel(team._id,name))
         }
     }
 
@@ -44,14 +46,15 @@ export default function ChannelModel({list,team}) {
                 <Modal.Body className='bg-dark'>
                  <div className='d-flex flex-column'>
                         {message && <Message variant="danger">{message}</Message>}
-                        <input
+                        {userData && team && userData._id === team?.admin?._id && <input
                             placeholder="Enter a new channel name"
                             className="w-100 mt-3 mb-3 my-3 mb-3"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                        ></input>
-                        <div className='mb-4 mt-2'></div>
-                        {channel && channel.map((ch) => <div className='mb-4'> <Link to="" className='button-6'>{ch?.name}</Link></div> )}
+                        ></input>}
+                        <div className='mb-4 mt-2'></div> 
+                        {channel && channel.map((ch) =>  <div className='mb-4'> <Link to="" className='button-6'>{ch?.name}</Link></div>                        
+                        )}
                  </div>
                 </Modal.Body>
                 <Modal.Footer className='bg-dark'>

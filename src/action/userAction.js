@@ -261,5 +261,76 @@ export const getAllTeam = (userId) => async (dispatch, getState) => {
     }
 };
 
+// add user in team
 
+export const addUser =
+    (teamId, email) => async (dispatch) => {
+        try {
+            dispatch({
+                type: CREATE_TEAM_REQUEST,
+            });
 
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                },
+            };
+
+            const { data } = await client.post(
+                `/team/admin/${teamId}`,
+                { email },
+                config
+            );
+            dispatch({
+                type: TOAST_ADD,
+                payload: 'USER ADDED !!!',
+            });
+        } catch (error) {
+         
+            dispatch({
+                type: TOAST_ADD,
+                payload: error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
+            });
+        }
+    };
+
+// add channel
+
+export const addChannel =
+    (teamId, name) => async (dispatch) => {
+        try {
+            // dispatch({
+            //     type: CREATE_TEAM_REQUEST,
+            // });
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                },
+            };
+
+            const { data } = await client.post(
+                `/channel/${teamId}`,
+                { name },
+                config
+            );
+            dispatch({
+                type: TOAST_ADD,
+                payload: 'Channel ADDED !!!',
+            });
+        } catch (error) {
+
+            dispatch({
+                type: TOAST_ADD,
+                payload: error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
+            });
+        }
+    };
