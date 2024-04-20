@@ -880,3 +880,7 @@
     position: relative;
     top: -80px
 }
+
+.emoji{
+    height: 100%;
+}
