@@ -121,6 +121,14 @@ async function joinTeam(req, res){
         const code = body.teamCode;
         const team = await teamModel.findOne({ teamCode: code});
 
+        const userExists = team.users.indexOf(userid);
+        if(userExists != -1){
+            res.status(500).json({
+                msg: "User already exists"
+            });
+            return;
+        }
+
         // add the user to the team
         const result = await teamModel.findOneAndUpdate({
             teamCode: code
