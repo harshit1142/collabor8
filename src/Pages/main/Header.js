@@ -1,13 +1,24 @@
 import React from 'react'
 import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap'
-import { FaRegHeart } from 'react-icons/fa'
-import { IoIosAddCircle } from 'react-icons/io'
+
 import { LinkContainer } from 'react-router-bootstrap'
-import { Link } from 'react-router-dom'
+
 import JoinTeamModel from '../../Components/JoinTeamModel'
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../action/userAction';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Header() {
+    const navigate=useNavigate();
+    const dispatch = useDispatch();
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userData } = userLogin;
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        navigate("/auth/login")
+    };
 
     return (
         <header>
@@ -76,14 +87,14 @@ export default function Header() {
                                   </Nav.Link>
                               </LinkContainer>
                           )} */}
-                            <NavDropdown title={"Profile"} id="username">
+                            <NavDropdown title={userData?.name} id="username">
                                 <LinkContainer to={""}>
                                     <NavDropdown.Item >Profile</NavDropdown.Item>
                                 </LinkContainer>
                                 <LinkContainer to={`/chatScreen/`}>
                                     <NavDropdown.Item>Chat</NavDropdown.Item>
                                 </LinkContainer>
-                                <NavDropdown.Item >
+                                <NavDropdown.Item onClick={logoutHandler}>
                                     Logout
                                 </NavDropdown.Item>
                             </NavDropdown>

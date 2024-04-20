@@ -17,7 +17,7 @@ export default function Signup() {
 
     useEffect(() => {
         if (userData) {
-            navigate("/main")
+            navigate("/login")
         }
     }, [userRegister]);
 
@@ -161,7 +161,7 @@ export default function Signup() {
                                 <div type="submit" className="button-4 mb-4 w-50 h-100 p-3"
                                       onClick={(e) => handleSignUp(e)}
                                 >
-                                    Register
+                                    Submit
                                 </div>
 
                                 <Link className="button-4 mb-4 w-50 h-100 p-3 text-light" to="/auth/login">

@@ -34,33 +34,26 @@ export const login = (email, password) => async (dispatch) => {
             },
         };
         const { data } = await client.post(
-            "/api/users/login",
+            "/auth/login",
             { email, password },
             config
         );
         dispatch({
             type: USER_LOGIN_SUCCESS,
-            payload: data.data.user,
+            payload: data.data,
         });
 
-        localStorage.setItem("userData", JSON.stringify(data.data.user));
+        localStorage.setItem("userData", JSON.stringify(data.data));
         dispatch({
             type: TOAST_ADD,
             payload: 'LOGINED SUCCESSFULLY !!!',
         });
     } catch (error) {
-        const errorMessage = (error.response.data);
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(errorMessage, 'text/html');
-        const errorText = doc.body.textContent.trim(); // Extracting text content and removing leading/trailing whitespace
-
-        const message = errorText.split("at")[0];
-
         dispatch({
             type: USER_LOGIN_FAIL,
             payload:
-                error.response && error.response.data
-                    ? message
+                error.response && error.response.data.message
+                    ? error.response.data.message
                     : error.message,
         });
     }
@@ -69,19 +62,8 @@ export const login = (email, password) => async (dispatch) => {
 //for logout
 
 export const logout = () => async (dispatch, getState) => {
-    const {
-        userLogin: { userData },
-    } = getState();
-    console.log(userData);
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            Authorization: `Bearer ${userData.token}`,
-        },
-    };
-    await client.post("/api/users/logout", {}, config);
+
+ 
     localStorage.removeItem("userData");
     dispatch({
         type: TOAST_ADD,
@@ -121,7 +103,7 @@ export const register =
 
             dispatch({
                 type: USER_REGISTER_SUCCESS,
-                payload: data,
+                payload: data.data,
             });
             console.log(data);
             localStorage.setItem("userData", JSON.stringify(data.data));
