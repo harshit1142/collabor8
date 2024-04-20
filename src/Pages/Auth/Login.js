@@ -41,7 +41,7 @@ export default function Login() {
                   <div className="display-1 text-center" ><Link to="/">Collabor8</Link></div>
 
                   <div className="col-md-8 col-lg-7 col-xl-6 text-center">
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ24Y-hhjkmud8eQtKB9QZ190sUgmKscz9QB65EF_jB8Q&s"
+                      <img src="https://www.scholarlms.com/wp-content/uploads/2020/10/Post-featured-Learners-Collaborate-Virtual-Learning-Environment.jpg"
                           className="img-fluid" alt="Phone image" />
                   </div>
                   <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 p-4 text-center" >
