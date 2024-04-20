@@ -1,7 +1,61 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
+import { register } from '../../action/userAction';
+import Message from '../../Components/Message';
+import Loader from '../../Components/Loader';
 
 export default function Signup() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const userRegister = useSelector((state) => state.userRegister);
+    const {
+        userData,
+        loading: loadingRegister,
+        error: errorRegister,
+    } = userRegister;
+
+    useEffect(() => {
+        if (userData) {
+            navigate("/main")
+        }
+    }, [userRegister]);
+
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        contact: "",
+    });
+    const [message, setMessage] = useState(null);
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        if (userDetails.password === "" || userDetails.email === "" || userDetails.contact === "" || userDetails.name === "" || userDetails.confirmPassword === "") {
+            setMessage("Invalid Input !!");
+            setTimeout(() => {
+                setMessage(null);
+            }, 3000);
+        }else if(userDetails.password!== userDetails.confirmPassword) {
+            setMessage("Password is not matching !!");
+            setTimeout(() => {
+                setMessage(null);
+            }, 3000);
+        }
+        else {
+            dispatch(
+                register(
+                    userDetails.email,
+                    userDetails.password,
+                    userDetails.contact,
+                    userDetails.name,
+                    userDetails.confirmPassword
+                )
+            );
+        }
+    };
+    
     return (
         <section className="auth" >
 
@@ -15,49 +69,38 @@ export default function Signup() {
                     </div>
                     <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 p-4 text-center" >
                         <h1 className="mb-1 text-light display-3" >Signup</h1>
-                        {/* {error && <Message variant='danger'>{error}</Message>} */}
-                        {/* {vaild === false && <Message variant='danger'>Invalid Input</Message>} */}
-                        {/* {loading && <Loader />} */}
-                        {/* {loading && (
-                          <Spinner
-                              animation="border"
-                              role="status"
-                              variant="danger"
-                              style={{
-                                  width: "100px",
-                                  margin: "auto",
-                                  height: "100px",
-                                  display: "block",
-                              }}
-                          />
-                      )} */}
+                        {message && <Message variant='danger'>{message}</Message>}
+                        {errorRegister && (
+                            <Message variant="danger">{errorRegister}</Message>
+                        )}
+                        {loadingRegister && <Loader />}
                         <form>
                             <div className="form-outline mb-2">
                                 <input
                                     type="text"
                                     id="form3Example1"
                                     className="form-control form-control"
-                                    placeholder="Enter fullName"
+                                    placeholder="Enter name"
                                     size="md"
-                                //   value={userDetails.fullname}
-                                //   onChange={(event) => {
-                                //       setUserDetails({
-                                //           ...userDetails,
-                                //           fullname: event.currentTarget.value,
-                                //       });
-                                //   }}
+                                  value={userDetails.name}
+                                  onChange={(event) => {
+                                      setUserDetails({
+                                          ...userDetails,
+                                          name: event.currentTarget.value,
+                                      });
+                                  }}
                                 />
                             </div>
 
                             <div className="form-outline mb-2" >
                                 <input type="email" id="form1Example13" className="form-control form-control-lg" placeholder="Enter Email"
-                                //   value={userDetails.email}
-                                //   onChange={(event) => {
-                                //       setUserDetails({
-                                //           ...userDetails,
-                                //           email: event.currentTarget.value,
-                                //       });
-                                //   }} 
+                                  value={userDetails.email}
+                                  onChange={(event) => {
+                                      setUserDetails({
+                                          ...userDetails,
+                                          email: event.currentTarget.value,
+                                      });
+                                  }} 
 
                                 />
 
@@ -69,26 +112,26 @@ export default function Signup() {
                                     type="text"
                                     placeholder="Enter Contact"
                                     size="md"
-                                //   value={userDetails.contact}
-                                //   onChange={(event) => {
-                                //       setUserDetails({
-                                //           ...userDetails,
-                                //           contact: event.currentTarget.value,
-                                //       });
-                                //   }}
+                                  value={userDetails.contact}
+                                  onChange={(event) => {
+                                      setUserDetails({
+                                          ...userDetails,
+                                          contact: event.currentTarget.value,
+                                      });
+                                  }}
                                 />
                             </div>
 
 
                             <div className="form-outline mb-2">
                                 <input type="password" id="form1Example23" className="form-control form-control-lg" placeholder="Enter Password"
-                                //   value={userDetails.password}
-                                //   onChange={(event) => {
-                                //       setUserDetails({
-                                //           ...userDetails,
-                                //           password: event.currentTarget.value,
-                                //       });
-                                //   }} 
+                                  value={userDetails.password}
+                                  onChange={(event) => {
+                                      setUserDetails({
+                                          ...userDetails,
+                                          password: event.currentTarget.value,
+                                      });
+                                  }} 
 
                                 />
 
@@ -100,13 +143,13 @@ export default function Signup() {
                                     className="form-control"
                                     placeholder="Confirm Password"
                                     size="md"
-                                    // value={userDetails.confirmPassword}
-                                    // onChange={(event) => {
-                                    //     setUserDetails({
-                                    //         ...userDetails,
-                                    //         confirmPassword: event.currentTarget.value,
-                                    //     });
-                                    // }}
+                                    value={userDetails.confirmPassword}
+                                    onChange={(event) => {
+                                        setUserDetails({
+                                            ...userDetails,
+                                            confirmPassword: event.currentTarget.value,
+                                        });
+                                    }}
                                 />
                             </div>
 
@@ -116,7 +159,7 @@ export default function Signup() {
                             <div className="form-check d-flex flex-row flex-wrap justify-content-center mb-4">
 
                                 <div type="submit" className="button-4 mb-4 w-50 h-100 p-3"
-                                    //   onClick={(e) => handleSignUp(e)}
+                                      onClick={(e) => handleSignUp(e)}
                                 >
                                     Register
                                 </div>

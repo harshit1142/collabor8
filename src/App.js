@@ -5,6 +5,8 @@ import Home from './Pages/Home/Home';
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import Main from "./Pages/main/Main";
+import Alert from "./Components/Alert";
+
 
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
 
       <>
 
-        {/* <Alert /> */}
+        <Alert />
 
         <Routes>
           <Route path="/" element={<Home />} exact />

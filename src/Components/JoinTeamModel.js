@@ -20,24 +20,27 @@ export default function JoinTeamModel() {
               <Modal.Body>
                   {/* {message && <Message variant="danger">{message}</Message>} */}
                   <input
-                      placeholder="Team Code"
+                      placeholder="Team Code To Join"
                       className="w-100 mt-3 mb-3"
                     //   value={val.oldPassword}
                     //   onChange={(e) => setVal({ ...val, oldPassword: e.target.value })}
                   ></input>
-                  {/* <input
-                      placeholder="new Password"
+                  <hr></hr>
+                  <p>Or</p>
+
+                  <input
+                      placeholder="Create New Team Name"
                       className="w-100 mt-3 mb-3"
-                      value={val.newPassword}
-                      onChange={(e) => setVal({ ...val, newPassword: e.target.value })}
-                  ></input> */}
+                    //   value={val.newPassword}
+                    //   onChange={(e) => setVal({ ...val, newPassword: e.target.value })}
+                  ></input>
                   {/* <input
-                      placeholder="confirm Password"
+                      placeholder=""
                       className="w-100 mt-3 mb-3"
-                      value={val.confirmPassword}
-                      onChange={(e) =>
-                          setVal({ ...val, confirmPassword: e.target.value })
-                      }
+                    //   value={val.confirmPassword}
+                    //   onChange={(e) =>
+                    //       setVal({ ...val, confirmPassword: e.target.value })
+                    //   }
                   ></input> */}
               </Modal.Body>
               <Modal.Footer>

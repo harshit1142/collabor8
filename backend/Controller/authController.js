@@ -52,7 +52,7 @@ async function postuser(req, res) {
             token:token
         });
     } catch (error) {
-        res.json({
+        res.status(500).json({
             message: "error"+error,
             data: []
         })
