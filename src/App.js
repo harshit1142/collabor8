@@ -6,10 +6,24 @@ import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import Main from "./Pages/main/Main";
 import Alert from "./Components/Alert";
+import { USER_LOGIN_SUCCESS } from "./types/userConstants";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 
 
 function App() {
+  const dispatch=useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('userData')) {
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: JSON.parse(localStorage.getItem("userData")),
+      });
+    }
+  }, [])
+
   return (
     <Router>
 

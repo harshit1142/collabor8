@@ -1,12 +1,40 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle } from 'react-icons/io';
+import Message from './Message';
 
 export default function JoinTeamModel() {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [join,setJoin]=useState("");
+    const [joinNew,setJoinNew]=useState("");
+
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState(null);
+
+    function handleJoin() {
+        if (join === "") {
+            setMessage("Enter Valid Code")
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000)
+        } else {
+
+        }
+    }
+    function handleNew() {
+        if (joinNew === "") {
+            setMessage("Enter valid Name")
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000)
+        } else {
+
+        }
+    }
   return (
       <>
           <Button variant="warning" className="mt-2 mb-2 ms-2" onClick={handleShow}>
@@ -18,12 +46,12 @@ export default function JoinTeamModel() {
                   <Modal.Title className="text-white">Join or Create Team</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                  {/* {message && <Message variant="danger">{message}</Message>} */}
+                  {message && <Message variant="danger">{message}</Message>}
                   <input
                       placeholder="Team Code To Join"
                       className="w-100 mt-3 mb-3"
-                    //   value={val.oldPassword}
-                    //   onChange={(e) => setVal({ ...val, oldPassword: e.target.value })}
+                      value={join}
+                      onChange={(e) => setJoin(e.target.value)}
                   ></input>
                   <hr></hr>
                   <p>Or</p>
@@ -31,23 +59,16 @@ export default function JoinTeamModel() {
                   <input
                       placeholder="Create New Team Name"
                       className="w-100 mt-3 mb-3"
-                    //   value={val.newPassword}
-                    //   onChange={(e) => setVal({ ...val, newPassword: e.target.value })}
+                      value={joinNew}
+                      onChange={(e) => setJoinNew(e.target.value)}
                   ></input>
-                  {/* <input
-                      placeholder=""
-                      className="w-100 mt-3 mb-3"
-                    //   value={val.confirmPassword}
-                    //   onChange={(e) =>
-                    //       setVal({ ...val, confirmPassword: e.target.value })
-                    //   }
-                  ></input> */}
+           
               </Modal.Body>
               <Modal.Footer>
-                  <Button variant="warning">
+                  <Button variant="warning" onClick={handleJoin}>
                       Join Team
                   </Button>
-                  <Button variant="primary" >
+                  <Button variant="primary" onClick={handleNew}>
                       Create New Team
                   </Button>
               </Modal.Footer>

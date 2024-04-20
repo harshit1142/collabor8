@@ -2,11 +2,30 @@ import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { IoIosAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import Message from './Message';
 
 export default function ChannelModel() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [name,setName]=useState("");
+    const [message, setMessage] = useState(null);
+
+    function handleAdd()
+    {
+        if(name===""){
+           setMessage("Enter valid Name")
+           setTimeout(()=>{
+            setMessage(null)
+           },3000)
+        }else{
+            
+        }
+    }
+
+
+
     return (
         <>
             <Button variant="warning" className="button-2 "style={{marginRight:"10px"}} onClick={handleShow}>
@@ -19,11 +38,12 @@ export default function ChannelModel() {
                 </Modal.Header>
                 <Modal.Body className='bg-dark'>
                  <div className='d-flex flex-column'>
+                        {message && <Message variant="danger">{message}</Message>}
                         <input
                             placeholder="Enter a new channel name"
                             className="w-100 mt-3 mb-3 my-3 mb-3"
-                        //   value={val.newPassword}
-                        //   onChange={(e) => setVal({ ...val, newPassword: e.target.value })}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                         ></input>
                         <div className='mb-4 mt-2'> <Link to="" className='button-6 '>DSA</Link> </div>
                         <div className='mb-4'> <Link to="" className='button-6'>WEB</Link></div>
@@ -38,7 +58,7 @@ export default function ChannelModel() {
                     {/* <Button variant="warning">
                         Join Team
                     </Button> */}
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={handleAdd}>
                         Create A New Channel
                     </Button>
                 </Modal.Footer>

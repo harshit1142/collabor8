@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Message from './Message';
 
 export default function UserModel() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState(null);
+
+    function handleAdd() {
+        if (email==="") {
+            setMessage("Enter valid Email")
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000)
+        } else {
+
+        }
+    }
     return (
         <>
             <Button variant="warning" className="button-1 " onClick={handleShow}>
@@ -18,11 +33,12 @@ export default function UserModel() {
                 </Modal.Header>
                 <Modal.Body className='bg-dark'>
                     <div className='d-flex flex-column'>
+                        {message && <Message variant="danger">{message}</Message>}
                         <input
                             placeholder="Add a user by email"
                             className="w-100 mt-3 mb-3 my-3 mb-3"
-                        //   value={val.newPassword}
-                        //   onChange={(e) => setVal({ ...val, newPassword: e.target.value })}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         ></input>
                         <div className='mb-4 mt-2'> <Link to="" className='button-6 '>Aniket</Link> </div>
                         <div className='mb-4'> <Link to="" className='button-6'>Sora</Link></div>
@@ -37,7 +53,7 @@ export default function UserModel() {
                     {/* <Button variant="warning">
                         Join Team
                     </Button> */}
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={handleAdd}>
                         Add user
                     </Button>
                 </Modal.Footer>

@@ -11,7 +11,7 @@ export default function Main() {
     const navigate=useNavigate();
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
-    let { userData } = userLogin;
+    var { userData } = userLogin;
 
     useEffect(()=>{
         if(localStorage.getItem('userData')){
@@ -19,7 +19,7 @@ export default function Main() {
         }else{
             navigate("/auth/login")
         }
-    })
+    },[userData,dispatch])
 
     return (
         <>

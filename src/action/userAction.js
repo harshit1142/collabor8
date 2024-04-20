@@ -123,4 +123,47 @@ export const register =
     };
 
 
+// add Team
+
+export const addTeam =
+    (email, password, contact, name) => async (dispatch) => {
+        try {
+            dispatch({
+                type: USER_REGISTER_REQUEST,
+            });
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                },
+            };
+
+            const { data } = await client.post(
+                "/auth/register",
+                { name, email, password, contact },
+                config
+            );
+
+            dispatch({
+                type: USER_REGISTER_SUCCESS,
+                payload: data.data,
+            });
+            console.log(data);
+            localStorage.setItem("userData", JSON.stringify(data.data));
+            dispatch({
+                type: TOAST_ADD,
+                payload: 'REGISTERED SUCCESSFULLY !!!',
+            });
+        } catch (error) {
+            dispatch({
+                type: USER_REGISTER_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        }
+    };
 

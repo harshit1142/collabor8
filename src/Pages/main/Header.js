@@ -88,12 +88,12 @@ export default function Header() {
                               </LinkContainer>
                           )} */}
                             <NavDropdown title={userData?.name} id="username">
-                                <LinkContainer to={""}>
+                                {/* <LinkContainer to={""}>
                                     <NavDropdown.Item >Profile</NavDropdown.Item>
-                                </LinkContainer>
-                                <LinkContainer to={`/chatScreen/`}>
+                                </LinkContainer> */}
+                                {/* <LinkContainer to={`/chatScreen/`}>
                                     <NavDropdown.Item>Chat</NavDropdown.Item>
-                                </LinkContainer>
+                                </LinkContainer> */}
                                 <NavDropdown.Item onClick={logoutHandler}>
                                     Logout
                                 </NavDropdown.Item>
