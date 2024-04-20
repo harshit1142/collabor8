@@ -3,11 +3,12 @@ import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 
-export default function UserModel() {
+export default function UserModel({list}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [listUser,setUser]=useState(list)
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
 
@@ -40,13 +41,9 @@ export default function UserModel() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         ></input>
-                        <div className='mb-4 mt-2'> <Link to="" className='button-6 '>Aniket</Link> </div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Sora</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Harshit</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Batsman</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>SORA AI</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Free Talk</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Memes</Link></div>
+                        <div className='mb-4 mt-2'></div>
+                        {listUser && listUser.map((usr) => <div className='mb-4'> <Link to="" className='button-6'>{usr?.name}</Link></div>)}
+
                     </div>
                 </Modal.Body>
                 <Modal.Footer className='bg-dark'>

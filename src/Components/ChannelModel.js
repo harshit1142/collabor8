@@ -4,10 +4,12 @@ import { IoIosAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 
-export default function ChannelModel() {
+export default function ChannelModel({list}) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [channel,setChannel]=useState(list);
 
     const [name,setName]=useState("");
     const [message, setMessage] = useState(null);
@@ -45,13 +47,8 @@ export default function ChannelModel() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                         ></input>
-                        <div className='mb-4 mt-2'> <Link to="" className='button-6 '>DSA</Link> </div>
-                        <div className='mb-4'> <Link to="" className='button-6'>WEB</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>JAVA</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>AI</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>SORA AI</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Free Talk</Link></div>
-                        <div className='mb-4'> <Link to="" className='button-6'>Memes</Link></div>
+                        <div className='mb-4 mt-2'></div>
+                        {channel && channel.map((ch) => <div className='mb-4'> <Link to="" className='button-6'>{ch?.name}</Link></div> )}
                  </div>
                 </Modal.Body>
                 <Modal.Footer className='bg-dark'>

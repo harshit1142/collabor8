@@ -16,7 +16,7 @@ export default function TeamCard({team}) {
                   
                       <Card.Title as='p' className='name-label fs-3 '>
                           <strong>{team?.name}</strong>
-                          {/* <p>Admin:</p> */}
+                          <p className='fs-5'>Admin: {team?.admin?.name}</p>
 
                       </Card.Title>
                       {/* <p style={{ fontFamily: "'Gluten', sans-serif" }}>{product?.description}</p> */}
@@ -25,8 +25,8 @@ export default function TeamCard({team}) {
                   <div className='d-flex flex-wrap '>
                       
                          
-                              <ChannelModel />
-                              <UserModel />
+                              <ChannelModel list={team?.channels}/>
+                              <UserModel list={team?.users}/>
                   </div>
               </Card.Body>
           </Card>

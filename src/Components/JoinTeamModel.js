@@ -36,7 +36,13 @@ export default function JoinTeamModel() {
             setTimeout(() => {
                 setMessage(null)
             }, 3000)
-        } else {
+        }else if(joinNew.length <5){
+            setMessage("Team Name should be atleast more than 5 words")
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000)
+        }
+         else {
             dispatch(addTeam(userData._id, joinNew))
             handleClose()
         }
