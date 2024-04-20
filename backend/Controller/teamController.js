@@ -1,17 +1,14 @@
-const mongoose = require('mongoose');
 const teamModel = require('../Model/teamModel');
 const userModel = require('../Model/userModel');
 const generateUniqueId = require('generate-unique-id');
 
 async function createTeam(req, res){
-    try{
+    try{ 
         const adminId = req.params.id;
         const body = req.body;
 
         let team = await teamModel.create(body);
         const teamid = team._id;
-
-
         
         const code = generateUniqueId({
             length: 6,
@@ -25,10 +22,8 @@ async function createTeam(req, res){
 
         },
         {
-            
-            admin: adminId,
-            teamCode: code
-            
+            $set: { admin: adminId, teamCode: code }, 
+            $push: { users: adminId } 
         },
         {
             new: true
@@ -52,7 +47,7 @@ async function createTeam(req, res){
         })
     }
     catch(error){
-        res.json({
+        res.status(500).json({
             msg: "error"+ error
         })
     }
@@ -65,11 +60,18 @@ async function addToTeam(req, res){
         const userEmail = body.email;
 
         const user = await userModel.findOne({ email: userEmail });
+        if(!user){
+            req.status(500).json({
+                msg: "User not found"
+            })
+            return;
+        }
+
         const team = await teamModel.findOne({ _id: teamid});
 
         const userExists = team.users.indexOf(user._id);
         if(userExists != -1){
-            res.status(201).json({
+            res.status(500).json({
                 msg: "User already exists"
             });
             return;
@@ -106,7 +108,7 @@ async function addToTeam(req, res){
         })
     }
     catch(error){
-        res.json({
+        res.status(500).json({
             msg: "error"+ error
         })
     }
@@ -150,7 +152,7 @@ async function joinTeam(req, res){
         })   
     }
     catch(error){
-        res.json({
+        res.status(500).json({
             msg: "error"+ error
         }) 
     }
@@ -169,11 +171,30 @@ async function getUserTeams(req, res){
         })
     }
     catch(error){
-        res.json({
+        res.status(500).json({
             msg: "error"+ error
         })
     }
 
 }
 
-module.exports = { createTeam, addToTeam, getUserTeams, joinTeam};
+// to get all the users in a team
+async function getAllUsers(req, res){
+    try{
+        const teamId = req.params.id;
+        const result = await teamModel.findOne({ _id: teamId}).populate('users');
+        const users = result.users;
+
+        res.status(201).json({
+            msg: "Users fetched successfully",
+            data: users
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            msg: "error"+ error
+        })
+    }
+}
+
+module.exports = { createTeam, addToTeam, getUserTeams, joinTeam, getAllUsers};

@@ -5,17 +5,21 @@ const channelSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    description:{
+        type: String
+    },
+    team:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'teamModel'
+    },
     chat:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'chatModel',
-
     },
     toDo : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'toDoModel'
     }]
-    
-
 },{
     timestamps: true
     
