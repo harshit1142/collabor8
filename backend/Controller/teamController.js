@@ -177,7 +177,15 @@ async function getUserTeams(req, res){
     try{
         const userid = req.params.id;
         // find all the users teams
-        const userTeams = await userModel.findOne({ _id: userid }).populate("teams");
+        const userTeams = await userModel.findOne({ _id: userid })
+            .populate({
+                path: 'teams',
+                populate: [
+                    { path: 'channels' },
+                    { path: 'users' },
+                    { path: 'admin' }
+                ]
+            });
 
         res.status(201).json({
             msg: "All teams fetched successfully",
@@ -188,8 +196,7 @@ async function getUserTeams(req, res){
         res.status(500).json({
             msg: "error"+ error
         })
-    }
-
+    }   
 }
 
 // to get all the users in a team
