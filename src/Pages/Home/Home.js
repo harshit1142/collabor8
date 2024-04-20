@@ -8,7 +8,7 @@ export default function Home() {
     <div  className='home-head d-flex justify-content-center align-items-center'>
         <div className='text-center'>
             <p style={{fontSize:"61px"}}>Collabor8</p>
-            <p>asd sdfsdf sfsf dsgfds svds dsfsdffs  ds </p>
+            <p>Building Together, Coding Better: Your Collaborative Dev Companion </p>
             
 
           <Link to="/auth/login" className='text-light button-3'>Get Started</Link>
