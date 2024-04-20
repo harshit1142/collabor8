@@ -9,7 +9,7 @@
   A website where developers within an organization can collaborate together on a project, raise issues, manage project tasks and can held discussions on various related topics
   
 ## Demo Video Link:
-  <a href="https://drive.google.com/file/d/1hPPC20jR63r1znwlJ-4A4950Kf9zMnCv/view?usp=sharing">https://drive.google.com/file/d/1hPPC20jR63r1znwlJ-4A4950Kf9zMnCv/view?usp=sharing</a>
+  <a href="https://youtu.be/akE69S9d4ZA">https://youtu.be/akE69S9d4ZA</a>
   
 ## Presentation Link:
   <a href="https://docs.google.com/presentation/d/1oTwqKnFeC53wBWkqgdw9lbnk6AD1vNkH/edit?usp=sharing&ouid=110476318753357149255&rtpof=true&sd=true"> PPT link </a>
