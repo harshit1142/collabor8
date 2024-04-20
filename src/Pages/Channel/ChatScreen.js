@@ -38,107 +38,102 @@ export default function ChatScreen() {
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
     var { userData } = userLogin;
-    const getCHAT = useSelector((state) => state.getChat);
-    var { chatData, loading } = getCHAT;
-    const Message = useSelector((state) => state.getMessage);
-    var { messageData } = Message;
-    const chatList = useSelector((state) => state.chatList);
-    var { chatListData } = chatList;
+    // const getCHAT = useSelector((state) => state.getChat);
+    // var { chatData, loading } = getCHAT;
+    // const Message = useSelector((state) => state.getMessage);
+    // var { messageData } = Message;
+    // const chatList = useSelector((state) => state.chatList);
+    // var { chatListData } = chatList;
     const [sendMessage, setSendMessage] = useState("");
-    const deleteChat = useSelector((state) => state.deleteChat);
-    var { success, error } = deleteChat;
+  
+
     const [reload, setReload] = useState(false);
     const [searchUser, setSearchUser] = useState("");
 
-    const [images, setImages] = useState([]);
-    const [uploading, setUploading] = useState(false);
+    // const [images, setImages] = useState([]);
+    // const [uploading, setUploading] = useState(false);
 
 
     // console.log(images);
 
+
+
     // useEffect(() => {
-
-    //     socket.on("typing", () => setIsTyping(true));
-    //     socket.on("stop typing", () => setIsTyping(false));
-
+    //     dispatch({ type: CHAT_RESET });
+    //     dispatch({ type: MESSAGE_RESET });
+    //     dispatch({ type: CHAT_LIST_RESET });
     // }, []);
 
-    useEffect(() => {
-        dispatch({ type: CHAT_RESET });
-        dispatch({ type: MESSAGE_RESET });
-        dispatch({ type: CHAT_LIST_RESET });
-    }, []);
+    // useEffect(() => {
+    //     if (userData && sellerID && userData._id === sellerID) {
+    //         return;
+    //     }
+    //     if (!chatID && userData && sellerID) {
+    //         dispatch(get_Chat(sellerID, userData.token));
+    //     }
+    // }, [sellerID, userData, chatID, reload]);
 
-    useEffect(() => {
-        if (userData && sellerID && userData._id === sellerID) {
-            return;
-        }
-        if (!chatID && userData && sellerID) {
-            dispatch(get_Chat(sellerID, userData.token));
-        }
-    }, [sellerID, userData, chatID, reload]);
+    // useEffect(() => {
+    //     if (userData && sellerID && userData?._id === sellerID) {
+    //         return;
+    //     }
+    //     if (userData && chatData && !chatID) {
+    //         dispatch(getMessage(chatData._id, userData.token));
+    //     }
+    //     if (userData && chatID) {
+    //         dispatch(getMessage(chatID, userData.token));
+    //     }
+    //     if (userData) {
+    //         dispatch(get_All_Chat(userData._id, userData.token));
+    //     }
+    // }, [chatData, chatID, userData, reload, sellerID]);
 
-    useEffect(() => {
-        if (userData && sellerID && userData?._id === sellerID) {
-            return;
-        }
-        if (userData && chatData && !chatID) {
-            dispatch(getMessage(chatData._id, userData.token));
-        }
-        if (userData && chatID) {
-            dispatch(getMessage(chatID, userData.token));
-        }
-        if (userData) {
-            dispatch(get_All_Chat(userData._id, userData.token));
-        }
-    }, [chatData, chatID, userData, reload, sellerID]);
+    // useEffect(() => {
+    //     if (localStorage.getItem("userData")) {
+    //         userData = JSON.parse(localStorage.getItem("userData"));
+    //     } else {
+    //         navigate("/");
+    //         return;
+    //     }
+    //     dispatch(get_All_Chat(userData._id, userData.token));
+    //     if (userData._id === sellerID) {
+    //         return;
+    //     }
 
-    useEffect(() => {
-        if (localStorage.getItem("userData")) {
-            userData = JSON.parse(localStorage.getItem("userData"));
-        } else {
-            navigate("/");
-            return;
-        }
-        dispatch(get_All_Chat(userData._id, userData.token));
-        if (userData._id === sellerID) {
-            return;
-        }
+    //     setSendMessage("");
+    // }, [dispatch, sellerID, userData, chatID, reload]);
 
-        setSendMessage("");
-    }, [dispatch, sellerID, userData, chatID, reload]);
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        if (sendMessage === "") {
-            setTypeMessage("Type a message....");
-            setTimeout(() => {
-                setTypeMessage(null);
-            }, 3000);
-        }
-        if (sendMessage !== "") {
-            const formData = new FormData();
-            formData.append("content", sendMessage);
-            for (let i = 0; i < images.length; i++) {
-                const file = images[i];
-                formData.append("attachments", file);
-            }
-            if (chatID) {
-                dispatch(postMessage(chatID, formData, userData.token));
-            } else {
-                dispatch(postMessage(chatData._id, formData, userData.token));
-            }
-            if (userData && chatData && !chatID) {
-                dispatch(getMessage(chatData._id, userData.token));
-            }
-            if (userData && chatID) {
-                dispatch(getMessage(chatID, userData.token));
-            }
-            setSendMessage("");
-            setReload(!reload);
-            setImages([]);
-        }
-    }
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     if (sendMessage === "") {
+    //         setTypeMessage("Type a message....");
+    //         setTimeout(() => {
+    //             setTypeMessage(null);
+    //         }, 3000);
+    //     }
+    //     if (sendMessage !== "") {
+    //         const formData = new FormData();
+    //         formData.append("content", sendMessage);
+    //         for (let i = 0; i < images.length; i++) {
+    //             const file = images[i];
+    //             formData.append("attachments", file);
+    //         }
+    //         if (chatID) {
+    //             dispatch(postMessage(chatID, formData, userData.token));
+    //         } else {
+    //             dispatch(postMessage(chatData._id, formData, userData.token));
+    //         }
+    //         if (userData && chatData && !chatID) {
+    //             dispatch(getMessage(chatData._id, userData.token));
+    //         }
+    //         if (userData && chatID) {
+    //             dispatch(getMessage(chatID, userData.token));
+    //         }
+    //         setSendMessage("");
+    //         setReload(!reload);
+    //         setImages([]);
+    //     }
+    // }
 
     useEffect(() => {
         if (messagesEndRef.current) {
