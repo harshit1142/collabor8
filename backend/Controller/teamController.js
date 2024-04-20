@@ -120,6 +120,12 @@ async function joinTeam(req, res){
         const body = req.body;
         const code = body.teamCode;
         const team = await teamModel.findOne({ teamCode: code});
+        if(!team){
+            res.status(500).json({
+                msg: "Invalid team code"
+            })
+            return;
+        }
 
         const userExists = team.users.indexOf(userid);
         if(userExists != -1){
