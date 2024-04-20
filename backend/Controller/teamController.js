@@ -18,7 +18,7 @@ async function createTeam(req, res){
             includeSymbols: ['@', '#']
         });
 
-        
+
         // pushing the generated teamCode and the adminId to the team
         team = await teamModel.findByIdAndUpdate({
             _id: teamid
@@ -65,9 +65,18 @@ async function addToTeam(req, res){
         const userEmail = body.email;
 
         const user = await userModel.findOne({ email: userEmail });
+        const team = await teamModel.findOne({ _id: teamid});
+
+        const userExists = team.users.indexOf(user._id);
+        if(userExists != -1){
+            res.status(201).json({
+                msg: "User already exists"
+            });
+            return;
+        }
 
         // add the user to the team
-        const team = await teamModel.findByIdAndUpdate({
+        const result = await teamModel.findByIdAndUpdate({
             _id: teamid
         },
         {
@@ -93,7 +102,7 @@ async function addToTeam(req, res){
 
         res.status(201).json({
             msg: "User added successfully",
-            data: team
+            data: result
         })
     }
     catch(error){
@@ -101,6 +110,51 @@ async function addToTeam(req, res){
             msg: "error"+ error
         })
     }
+}
+
+async function joinTeam(req, res){
+    try{
+        const userid = req.params.id;
+        const body = req.body;
+        const code = body.teamCode;
+        const team = await teamModel.findOne({ teamCode: code});
+
+        // add the user to the team
+        const result = await teamModel.findOneAndUpdate({
+            teamCode: code
+        },
+        {
+            $push:{
+                users: userid
+            }
+        },
+        {
+            new: true
+        }
+        )
+        
+        // update the teams of the users
+        await userModel.findByIdAndUpdate({
+            _id: userid
+        },
+        {
+            $push:{
+                teams: team._id
+            }
+        }
+        )
+
+        res.status(201).json({
+            msg: "User added successfully",
+            data: result
+        })   
+    }
+    catch(error){
+        res.json({
+            msg: "error"+ error
+        }) 
+    }
+
 }
 
 async function getUserTeams(req, res){
@@ -122,4 +176,4 @@ async function getUserTeams(req, res){
 
 }
 
-module.exports = { createTeam, addToTeam, getUserTeams};
+module.exports = { createTeam, addToTeam, getUserTeams, joinTeam};
