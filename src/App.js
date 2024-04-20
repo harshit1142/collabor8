@@ -37,7 +37,7 @@ function App() {
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<Signup />} />
           <Route path="/main" element={<Main />} />
-          <Route path="/channel/chat" element={<ChatScreen />} />
+          <Route path="/channel/:teamId" element={<ChatScreen />} />
           <Route path="*" element={<Home />} />
         </Routes>
         {/* <Footer /> */}

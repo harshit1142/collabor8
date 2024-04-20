@@ -18,9 +18,12 @@ import { Button, Form } from "react-bootstrap";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import './index.css'
+import ChatUserList from "../../Components/ChatUserList";
 
 export default function ChatScreen() {
     const match = useParams();
+    const teamId=match.teamId;
+    const channelId=match.channelId;
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const handleEmojiClick = (emoji) => {
         const emojiChar = emoji.emoji
@@ -39,18 +42,27 @@ export default function ChatScreen() {
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
     var { userData,loading } = userLogin;
+    const teams = useSelector((state) => state.getTeam);
+    var { team } = teams;
+ 
+    
+    const listData=team?.filter((item)=> item._id===teamId)[0]?.channels;
+    
+    console.log(team);
+    console.log(listData);
+   
     // const getCHAT = useSelector((state) => state.getChat);
     // var { chatData, loading } = getCHAT;
     // const Message = useSelector((state) => state.getMessage);
     // var { messageData } = Message;
-    // const chatList = useSelector((state) => state.chatList);
-    // var { chatListData } = chatList;
+
     const [sendMessage, setSendMessage] = useState("");
   
 
     const [reload, setReload] = useState(false);
     const [searchUser, setSearchUser] = useState("");
 
+   
     // const [images, setImages] = useState([]);
     // const [uploading, setUploading] = useState(false);
 
@@ -248,20 +260,17 @@ export default function ChatScreen() {
                                     >
                                         <span >Channels</span>
                                     </span>
-                                    {/* {searchUser === "" && chatListData &&
-                                        chatListData.map((list) => {
+                                    {searchUser === "" && listData &&
+                                            listData.map((list) => {
                                             return (
                                                 <ChatUserList
                                                     list={list}
                                                     userID={userData._id}
                                                     key={list._id}
-                                                    chatID={
-                                                        chatID ? chatID : chatData ? chatData._id : ""
-                                                    }
-                                                    token={userData?.token}
+                                                    channelId={channelId ? channelId :null}
                                                 />
                                             );
-                                        })} */}
+                                        })}
                                     {/* {searchUser !== "" && chatListData && chatListData
                                         .filter((list) =>
                                             list.participants.some(

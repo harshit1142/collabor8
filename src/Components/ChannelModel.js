@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
-import { IoIosAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Message from './Message';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,7 +52,7 @@ export default function ChannelModel({list,team}) {
                           onChange={(e) => setName(e.target.value)}
                         ></input>}
                         <div className='mb-4 mt-2'></div> 
-                        {channel && channel.map((ch) =>  <div className='mb-4'> <Link to="/channel/chat" className='button-6'>{ch?.name}</Link></div>                        
+                        {channel && channel.map((ch) =>  <div className='mb-4'> <Link to={`/channel/${team._id}`} className='button-6'>{ch?.name}</Link></div>                        
                         )}
                  </div>
                 </Modal.Body>
