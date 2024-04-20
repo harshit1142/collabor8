@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from './Message';
+import { useSelector } from 'react-redux';
 
 export default function UserModel({list,team}) {
     const [show, setShow] = useState(false);
