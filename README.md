@@ -9,17 +9,18 @@
   A website where developers within an organization can collaborate together on a project, raise issues, manage project tasks and can held discussions on various related topics
   
 ## Demo Video Link:
-  <a href="https://youtu.be/dQw4w9WgXcQ">https://youtu.be/dQw4w9WgXcQ</a>
+  <a href="https://youtu.be/akE69S9d4ZA">https://youtu.be/akE69S9d4ZA</a>
   
 ## Presentation Link:
-  <a href="https://bit.ly/hack36_24_ppt"> PPT link here </a>
+  <a href="https://docs.google.com/presentation/d/1oTwqKnFeC53wBWkqgdw9lbnk6AD1vNkH/edit?usp=sharing&ouid=110476318753357149255&rtpof=true&sd=true"> PPT link </a>
   
   
 ## Table of Contents:
-  * Teams: Users can create different teams for different collaborations.
-  * Members can be added to a team either through e-mail or by team code.
-  * Channels: Each team comprises of several channels to work on different projects.
-  *   
+  * Can create teams Or Join teams as per the user
+  * Team codes can be used to join teams
+  * Admin can create channels for different projects and can add or remove users as per requirement
+  * Admin can add users by their respective email-ids
+  * Members can discuss on various channels on a team 
 
 ## Technology Stack:
   1) HTML
